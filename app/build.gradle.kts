@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
 }
 
 android {
@@ -35,7 +36,6 @@ android {
 dependencies {
     implementation(kotlin("stdlib-jdk7", KotlinCompilerVersion.VERSION))
     implementation(project(":shared"))
-    implementation("androidx.recyclerview:recyclerview:1.1.0")
     implementation(Deps.app_compat_x)
     implementation(Deps.core_ktx)
     implementation(Deps.ktor.androidCore)
@@ -46,5 +46,18 @@ dependencies {
     implementation(Deps.Coroutines.android)
     implementation(Deps.multiplatformSettings)
     implementation(Deps.koinCore)
+    implementation(Deps.cardView)
+    implementation(Deps.recyclerView)
+    implementation(Deps.glide)
+    implementation(Deps.viewModel)
+    implementation(Deps.liveData)
+    implementation(Deps.lifecycleExtensions)
+    implementation(Deps.lifecycleReactiveStreams)
+    implementation(Deps.lifecycleRuntime)
+    implementation(Deps.koinCore)
+
+    kapt(Deps.lifecycleCompilerKapt)
+    kapt(Deps.glideCompilerKapt)
+
     testImplementation(Deps.junit)
 }

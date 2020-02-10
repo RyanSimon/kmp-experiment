@@ -8,3 +8,7 @@ actual fun currentTimeMillis(): Long = (NSDate().timeIntervalSince1970 * 1000).t
 internal actual fun printThrowable(t: Throwable) {
     t.printStackTrace()
 }
+
+actual fun <T> runBlocking(block: suspend () -> T): T {
+    return runBlocking { block() }
+}

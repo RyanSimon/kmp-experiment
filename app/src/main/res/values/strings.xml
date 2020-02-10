@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">KaMP Kit</string>
+    <string name="app_name">Yelp Fusion</string>
+
+    <!-- Business Feature -->
+    <string name="business_img_accessibility_msg">Image for %s</string>
+    <string name="search">Search&#8320;</string>
 </resources>

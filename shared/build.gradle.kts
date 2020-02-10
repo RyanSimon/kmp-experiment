@@ -35,7 +35,7 @@ kotlin {
         implementation(Deps.multiplatformSettings)
         implementation(Deps.koinCore)
         implementation(Deps.ktor.commonSerialization)
-
+        implementation(Deps.napierLogger)
     }
 
     sourceSets["commonTest"].dependencies {

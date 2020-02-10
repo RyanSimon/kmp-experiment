@@ -5,7 +5,6 @@ object Versions {
     val min_sdk = 21
     val target_sdk = 29
     val compile_sdk = 29
-
     val kotlin = "1.3.61"
     val android_x = "1.1.0"
     val android_gradle_plugin = "3.4.1"
@@ -19,6 +18,15 @@ object Versions {
     val koin = "3.0.1-khan-SNAPSHOT"
     val serialization = "0.14.0"
     val xcodesync = "0.2"
+    val napier = "1.1.0"
+    val cardView = "1.0.0"
+    val recyclerView = "1.0.0"
+    val lifecycle = "2.1.0"
+    val glide = "4.10.0"
+    val androidCoreKtx = "1.1.0"
+    val viewModelKtx = "2.1.0"
+    val liveDataKtx = "2.2.0-alpha05"
+    val lifecycleKtx = "2.2.0-alpha01"
 
 }
 
@@ -33,6 +41,22 @@ object Deps {
     val multiplatformSettingsTest = "com.russhwolf:multiplatform-settings-test:${Versions.multiplatformSettings}"
     val koinCore = "co.touchlab:koin-core:${Versions.koin}"
     val xcodesync = "co.touchlab:kotlinxcodesync:${Versions.xcodesync}"
+    val napierLogger = "com.github.aakira:napier:${Versions.napier}"
+
+    // Android dependencies
+    val cardView = "androidx.cardview:cardview:${Versions.cardView}"
+    val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
+    val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
+    val lifecycleReactiveStreams = "androidx.lifecycle:lifecycle-reactivestreams:${Versions.lifecycle}"
+    val lifecycleCompilerKapt = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
+    val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.viewModelKtx}"
+    val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.liveDataKtx}"
+    val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleKtx}"
+
+
+    // General dependencies
+    val glideCompilerKapt = "com.github.bumptech.glide:compiler:${Versions.glide}"
 
 
     object AndroidXTest {

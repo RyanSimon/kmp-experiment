@@ -21,7 +21,11 @@ android {
 
 kotlin {
     android()
-    ios()
+    ios {
+        binaries.framework("Generics") {
+            freeCompilerArgs = freeCompilerArgs + "-Xobjc-generics"
+        }
+    }
 
     version = "1.0"
 

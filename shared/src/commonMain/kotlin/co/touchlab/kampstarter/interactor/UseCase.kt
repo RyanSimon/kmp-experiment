@@ -5,6 +5,8 @@ import co.touchlab.kampstarter.Failure
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import co.touchlab.kampstarter.functional.Either
+import co.touchlab.kampstarter.printThrowable
+import kotlin.coroutines.CoroutineContext
 import kotlin.time.*
 
 /**
@@ -19,11 +21,12 @@ import kotlin.time.*
  */
 abstract class UseCase<out Type, in Params> where Type : Any {
 
+    internal val mainScope = MainScope(Dispatchers.Main)
+
     abstract suspend fun run(params: Params): Either<Failure, Type>
 
     @UseExperimental(ExperimentalTime::class)
     operator fun invoke(
-            coroutineScope: CoroutineScope,
             params: Params,
             onResult: (Either<Failure, Type>) -> Unit = {}) {
         var measure: Duration = 0.toDuration(DurationUnit.MILLISECONDS)
@@ -33,25 +36,32 @@ abstract class UseCase<out Type, in Params> where Type : Any {
             }
 
             measure += requestTime
-
-            //Napier.d("Request time: $requestTime ms")
         }
                 .flowOn(Dispatchers.Main)
-                .onStart {
-//                    val delayTime = measureTime {
-//                        delay(2000)
-//                    }
-
-                   // measure += delayTime
-
-                   // Napier.d("Delay time: $delayTime ms")
-                }
                 .onEach {
                     onResult(it)
                 }
-                //.onCompletion { Napier.d("Flow done in: $measure ms") }
-                .launchIn(coroutineScope)
+                .launchIn(mainScope)
+    }
+
+    open fun cancel() {
+        mainScope.job.cancel()
     }
 
     class None
+
+    internal class MainScope(private val mainContext: CoroutineContext) : CoroutineScope {
+        override val coroutineContext: CoroutineContext
+            get() = mainContext + job + exceptionHandler
+
+        internal val job = Job()
+        private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            showError(throwable)
+        }
+
+        //TODO: Some way of exposing this to the caller without trapping a reference and freezing it.
+        fun showError(t: Throwable) {
+            printThrowable(t)
+        }
+    }
 }

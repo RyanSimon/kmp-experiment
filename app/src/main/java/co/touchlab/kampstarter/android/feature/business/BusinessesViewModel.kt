@@ -40,7 +40,6 @@ class BusinessesViewModel(private val getBusinessesAndTopReviewsBySearch: GetBus
                                     numResults: Int,
                                     numResultsToSkip: Int) {
         getBusinessesAndTopReviewsBySearch(
-                viewModelScope,
             GetBusinessesAndTopReviewsBySearch.Params(
                 searchTerm,
                 location,
@@ -71,5 +70,9 @@ class BusinessesViewModel(private val getBusinessesAndTopReviewsBySearch: GetBus
         mergedList.addAll(businesses)
 
         return mergedList
+    }
+
+    override fun onCleared() {
+        getBusinessesAndTopReviewsBySearch.cancel()
     }
 }

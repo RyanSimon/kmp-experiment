@@ -7,13 +7,16 @@ import co.touchlab.kampstarter.interactor.UseCase
 import co.touchlab.kampstarter.functional.Either
 import co.touchlab.kampstarter.functional.Either.Error
 import co.touchlab.kampstarter.functional.Either.Success
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 /**
  * @author Ryan Simon
  */
-class GetBusinessesAndTopReviewsBySearch(
-        private val businessesRepository: BusinessRepository
-) : UseCase<List<BusinessAndTopReview>, GetBusinessesAndTopReviewsBySearch.Params>() {
+class GetBusinessesAndTopReviewsBySearch : UseCase<List<BusinessAndTopReview>, GetBusinessesAndTopReviewsBySearch.Params>(), KoinComponent {
+
+    // TODO: need to inject it here, because Koin doesn't seem to support injection in iOS directly yet
+    private val businessesRepository: BusinessRepository by inject()
 
     private lateinit var deferred: Deferred<Either<Failure, List<BusinessAndTopReview>>>
 

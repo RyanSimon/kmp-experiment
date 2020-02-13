@@ -6,7 +6,6 @@ import co.touchlab.kampstarter.feature.business.data.network.BusinessReviewMappe
 import co.touchlab.kampstarter.feature.business.data.network.BusinessesApi
 import co.touchlab.kampstarter.feature.business.data.network.BusinessesApiImpl
 import co.touchlab.kampstarter.feature.business.domain.BusinessRepository
-import co.touchlab.kampstarter.feature.business.domain.GetBusinessesAndTopReviewsBySearch
 import co.touchlab.kampstarter.ktor.DogApiImpl
 import co.touchlab.kampstarter.ktor.KtorApi
 import org.koin.core.context.startKoin
@@ -27,7 +26,6 @@ val coreModule = module {
     factory { BusinessMapper() }
     // TODO platform module updated with InternetConnectionHandler
     factory<BusinessRepository> { BusinessRepositoryImpl(get(), object : InternetConnectionHandler { override fun isConnected() = true }, get(), get()) }
-    factory { GetBusinessesAndTopReviewsBySearch(get()) }
 }
 
 expect val platformModule: Module

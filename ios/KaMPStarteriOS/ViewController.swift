@@ -34,6 +34,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.getBusinessesAndTopReviewsBySearch?.cancel()
         self.getBusinessesAndTopReviewsBySearch = nil
     }
@@ -46,7 +47,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessNameCell", for: indexPath)
         if let businessNameCell = cell as? BusinessNameCell {
             let businessInfo = self.businessInfo[indexPath.row]
-            businessNameCell.bind(businessInfo: businessInfo as! (Business, BusinessReview))
+            businessNameCell.bind(businessInfo: businessInfo as! KotlinPair<Business, BusinessReview>)
         }
         return cell
     }
@@ -59,9 +60,9 @@ class BusinessNameCell: UITableViewCell {
     var business: Business?
     var businessReview: BusinessReview?
     
-    func bind(businessInfo: (Business, BusinessReview)){
-        self.business = businessInfo.0
-        self.businessReview = businessInfo.1
+    func bind(businessInfo: KotlinPair<Business, BusinessReview>){
+        self.business = businessInfo.first
+        self.businessReview = businessInfo.second
         businessNameLabel.text = business?.name
     }
 }

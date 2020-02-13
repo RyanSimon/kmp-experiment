@@ -13,7 +13,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 
     @IBOutlet weak var businessNameTableView: UITableView!
-    var businessInfo: NSArray = NSArray()
+    var businessInfo: Array<KotlinPair<Business, BusinessReview>> = []
     
     private var getBusinessesAndTopReviewsBySearch: GetBusinessesAndTopReviewsBySearch?
 
@@ -27,7 +27,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         getBusinessesAndTopReviewsBySearch!.invoke(params: GetBusinessesAndTopReviewsBySearch.Params(searchTerm: "chocolate", location: "San Francisco, CA", numResults: 20, numResultsToSkip: 0), onResult: { (either: Either) in either.either(fnL: { _ in
                 
             }) { (success: Any) -> Any in
-                self.businessInfo = success as! NSMutableArray as NSArray
+                self.businessInfo = success as! NSArray as! Array<KotlinPair<Business, BusinessReview>>
                 return self.businessNameTableView.reloadData()
             }
         })
@@ -47,7 +47,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessNameCell", for: indexPath)
         if let businessNameCell = cell as? BusinessNameCell {
             let businessInfo = self.businessInfo[indexPath.row]
-            businessNameCell.bind(businessInfo: businessInfo as! KotlinPair<Business, BusinessReview>)
+            businessNameCell.bind(businessInfo: businessInfo)
         }
         return cell
     }

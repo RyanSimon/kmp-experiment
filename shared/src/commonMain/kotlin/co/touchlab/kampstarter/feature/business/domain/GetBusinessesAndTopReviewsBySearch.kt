@@ -1,19 +1,23 @@
 package co.touchlab.kampstarter.feature.business.domain
 
 import co.touchlab.kampstarter.Failure
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import co.touchlab.kampstarter.interactor.UseCase
 import co.touchlab.kampstarter.functional.Either
 import co.touchlab.kampstarter.functional.Either.Error
 import co.touchlab.kampstarter.functional.Either.Success
+import co.touchlab.kampstarter.interactor.UseCase
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 /**
  * @author Ryan Simon
  */
-class GetBusinessesAndTopReviewsBySearch : UseCase<List<BusinessAndTopReview>, GetBusinessesAndTopReviewsBySearch.Params>(), KoinComponent {
+class GetBusinessesAndTopReviewsBySearch :
+    UseCase<List<BusinessAndTopReview>, GetBusinessesAndTopReviewsBySearch.Params>(),
+    KoinComponent {
 
     // TODO: need to inject it here, because Koin doesn't seem to support injection in iOS directly yet
     private val businessesRepository: BusinessRepository by inject()
@@ -22,13 +26,13 @@ class GetBusinessesAndTopReviewsBySearch : UseCase<List<BusinessAndTopReview>, G
 
     override suspend fun run(params: Params): Either<Failure, List<BusinessAndTopReview>> {
         businessesRepository.search(
-                params.searchTerm,
-                params.location,
-                params.numResults,
-                params.numResultsToSkip
+            params.searchTerm,
+            params.location,
+            params.numResults,
+            params.numResultsToSkip
         ).eitherSuspend(
-                { processBusinessFailure(it) },
-                { processBusinessSuccess(it) }
+            { processBusinessFailure(it) },
+            { processBusinessSuccess(it) }
         )
 
         return deferred.await()
@@ -45,12 +49,12 @@ class GetBusinessesAndTopReviewsBySearch : UseCase<List<BusinessAndTopReview>, G
     private suspend fun getBusinessesWithReviews(businesses: List<Business>): Either<Failure, List<BusinessAndTopReview>> {
         val flows = businesses.map { business ->
             flowOf(business)
-                    .map {
-                        fetchBusinessReviews(it)
-                    }
-                    .map { (business, businessReviews) ->
-                        mapBusinessAndReviews(business, businessReviews)
-                    }
+                .map {
+                    fetchBusinessReviews(it)
+                }
+                .map { (business, businessReviews) ->
+                    mapBusinessAndReviews(business, businessReviews)
+                }
         }
 
         val concurrentlyFetchedReviews = merge(*flows.toTypedArray()).toList()
@@ -62,23 +66,29 @@ class GetBusinessesAndTopReviewsBySearch : UseCase<List<BusinessAndTopReview>, G
         val results = businessesRepository.getBusinessReviews(business.id)
         var businessReviews: Either<Failure, List<BusinessReview>> = Error(Failure.ServerError)
         results.either(
-                { { businessReviews = Error(it) }.invoke() },
-                { { businessReviews = Success(it) }.invoke() }
+            { { businessReviews = Error(it) }.invoke() },
+            { { businessReviews = Success(it) }.invoke() }
         )
 
         return Pair(business, businessReviews)
     }
 
-    private fun mapBusinessAndReviews(business: Business, maybeBusinessReviews: Either<Failure, List<BusinessReview>>): Either<Failure, BusinessAndTopReview> {
+    private fun mapBusinessAndReviews(
+        business: Business,
+        maybeBusinessReviews: Either<Failure, List<BusinessReview>>
+    ): Either<Failure, BusinessAndTopReview> {
         var businessAndTopReview: Either<Failure, BusinessAndTopReview> = Error(Failure.ServerError)
         maybeBusinessReviews.either(
-                { { businessAndTopReview = Error(it) }.invoke() },
-                { {
+            { { businessAndTopReview = Error(it) }.invoke() },
+            {
+                {
                     val topBusinessReview = it.firstOrNull()
                     if (topBusinessReview != null) {
-                        businessAndTopReview = Success(BusinessAndTopReview(business, topBusinessReview))
+                        businessAndTopReview =
+                            Success(BusinessAndTopReview(business, topBusinessReview))
                     }
-                }.invoke() }
+                }.invoke()
+            }
         )
 
         return businessAndTopReview
@@ -90,8 +100,8 @@ class GetBusinessesAndTopReviewsBySearch : UseCase<List<BusinessAndTopReview>, G
         var failure: Failure? = null
         for (businessAndTopReview in maybeBusinessAndTopReview) {
             businessAndTopReview.either(
-                    { { failure = it }.invoke() },
-                    { finalValues.add(it) }
+                { { failure = it }.invoke() },
+                { finalValues.add(it) }
             )
         }
 
@@ -107,13 +117,13 @@ class GetBusinessesAndTopReviewsBySearch : UseCase<List<BusinessAndTopReview>, G
      *
      * NOTE: [flows].size is ideal for concurrency, but Yelp API rate limits aren't liking how often I'm hitting the API
      */
-    private fun <T> merge(vararg flows: Flow<T>): Flow<T>  = flowOf(*flows).flattenMerge(concurrency = 2)
+    private fun <T> merge(vararg flows: Flow<T>): Flow<T> = flowOf(*flows).flattenMerge(concurrency = 1)
 
     data class Params(
-            val searchTerm: String,
-            val location: String,
-            val numResults: Int,
-            val numResultsToSkip: Int
+        val searchTerm: String,
+        val location: String,
+        val numResults: Int,
+        val numResultsToSkip: Int
     )
 
 }

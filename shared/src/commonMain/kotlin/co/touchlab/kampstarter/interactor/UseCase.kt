@@ -2,10 +2,16 @@ package co.touchlab.kampstarter.interactor
 
 
 import co.touchlab.kampstarter.Failure
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 import co.touchlab.kampstarter.functional.Either
 import co.touchlab.kampstarter.printThrowable
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.*
 
@@ -27,8 +33,9 @@ abstract class UseCase<out Type, in Params> where Type : Any {
 
     @UseExperimental(ExperimentalTime::class)
     operator fun invoke(
-            params: Params,
-            onResult: (Either<Failure, Type>) -> Unit = {}) {
+        params: Params,
+        onResult: (Either<Failure, Type>) -> Unit = {}
+    ) {
         var measure: Duration = 0.toDuration(DurationUnit.MILLISECONDS)
         flow {
             val requestTime = measureTime {
@@ -37,11 +44,11 @@ abstract class UseCase<out Type, in Params> where Type : Any {
 
             measure += requestTime
         }
-                .flowOn(Dispatchers.Main)
-                .onEach {
-                    onResult(it)
-                }
-                .launchIn(mainScope)
+            .flowOn(Dispatchers.Main)
+            .onEach {
+                onResult(it)
+            }
+            .launchIn(mainScope)
     }
 
     open fun cancel() {

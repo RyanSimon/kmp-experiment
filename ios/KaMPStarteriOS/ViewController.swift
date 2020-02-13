@@ -26,7 +26,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         getBusinessesAndTopReviewsBySearch!.invoke(params: GetBusinessesAndTopReviewsBySearch.Params(searchTerm: "chocolate", location: "San Francisco, CA", numResults: 20, numResultsToSkip: 0), onResult: { (either: Either) in either.either(fnL: { _ in
                 
-            }) { (success: Any?) -> Any in
+            }) { (success: Any) -> Any in
                 self.businessInfo = success as! NSMutableArray as NSArray
                 return self.businessNameTableView.reloadData()
             }
@@ -45,7 +45,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessNameCell", for: indexPath)
         if let businessNameCell = cell as? BusinessNameCell {
-            let businessInfo = self.businessInfo[indexPath.row] as Any
+            let businessInfo = self.businessInfo[indexPath.row]
             businessNameCell.bind(businessInfo: businessInfo as! (Business, BusinessReview))
         }
         return cell

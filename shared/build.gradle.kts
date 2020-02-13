@@ -21,11 +21,7 @@ android {
 
 kotlin {
     android()
-    ios {
-        binaries.framework("Generics") {
-            freeCompilerArgs = freeCompilerArgs + "-Xobjc-generics"
-        }
-    }
+    ios()
 
     version = "1.0"
 
@@ -110,5 +106,11 @@ val iOSTest: Task by tasks.creating {
         exec {
             commandLine("xcrun", "simctl", "spawn", "--standalone",device, binary.absolutePath)
         }
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xobjc-generics")
     }
 }

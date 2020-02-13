@@ -110,5 +110,5 @@ val iOSTest: Task by tasks.creating {
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink>().configureEach {
-    this.binary.freeCompilerArgs += "-Xobjc-generics"
+    kotlinOptions.freeCompilerArgs += "-Xobjc-generics"
 }

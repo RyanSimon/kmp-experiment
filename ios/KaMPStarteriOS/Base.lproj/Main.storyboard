@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,54 +16,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RNk-5V-iEG" userLabel="Business Name Table View">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pd0-Hu-Gtj">
+                                <rect key="frame" x="0.0" y="20" width="414" height="856"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" id="AZM-q0-2Px">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </searchBar>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BusinessNameCell" id="86d-sM-nP6" customClass="BusinessNameCell" customModule="KaMPStarteriOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="414" height="43.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="86d-sM-nP6" id="pGc-fW-yte">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aa7-9H-iWT">
+                                    <size key="itemSize" width="414" height="56"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BusinessCell" id="4Jg-HY-huk" customClass="BusinessCell" customModule="KaMPStarteriOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="56"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zcI-NH-8uW" customClass="BusinessCell" customModule="KaMPStarteriOS" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghv-e4-fHH">
-                                                    <rect key="frame" x="20" y="11" width="118" height="21.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUX-1q-7Ig">
+                                                    <rect key="frame" x="10" y="16" width="404" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="ghv-e4-fHH" secondAttribute="bottom" id="2Vd-gV-xAr"/>
-                                                <constraint firstItem="ghv-e4-fHH" firstAttribute="top" secondItem="pGc-fW-yte" secondAttribute="topMargin" id="Qk7-R7-7I8"/>
-                                                <constraint firstItem="ghv-e4-fHH" firstAttribute="leading" secondItem="pGc-fW-yte" secondAttribute="leadingMargin" id="nVQ-3K-Yz5"/>
+                                                <constraint firstItem="cUX-1q-7Ig" firstAttribute="leading" secondItem="zcI-NH-8uW" secondAttribute="leading" constant="10" id="zt3-iS-q1I"/>
                                             </constraints>
-                                        </tableViewCellContentView>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="414" height="56"/>
                                         <connections>
-                                            <outlet property="businessNameLabel" destination="ghv-e4-fHH" id="gBv-mD-0o7"/>
+                                            <outlet property="businessNameLabel" destination="cUX-1q-7Ig" id="vIN-Wf-It8"/>
                                         </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="searchBar" id="DWF-e9-KPr" customClass="SearchBarView" customModule="KaMPStarteriOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <searchBar contentMode="redraw" id="AZM-q0-2Px">
+                                            <rect key="frame" x="0.0" y="3" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="BYZ-38-t0r" id="gu4-ul-Ppz"/>
+                                            </connections>
+                                        </searchBar>
+                                    </subviews>
+                                    <connections>
+                                        <outlet property="searchBar" destination="AZM-q0-2Px" id="KEx-5z-WJY"/>
+                                    </connections>
+                                </collectionReusableView>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="U4H-lI-5S9"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="XV7-y7-k9L"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="RNk-5V-iEG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="8Yb-of-tAw"/>
-                            <constraint firstItem="RNk-5V-iEG" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="JSe-02-36d"/>
-                            <constraint firstItem="RNk-5V-iEG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="OxD-97-sM3"/>
-                            <constraint firstAttribute="bottom" secondItem="RNk-5V-iEG" secondAttribute="bottom" id="sss-zk-H9m"/>
+                            <constraint firstItem="pd0-Hu-Gtj" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="3be-Sq-OBK"/>
+                            <constraint firstAttribute="bottom" secondItem="pd0-Hu-Gtj" secondAttribute="bottom" constant="20" symbolic="YES" id="YSj-zM-cZ3"/>
+                            <constraint firstItem="pd0-Hu-Gtj" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" symbolic="YES" id="mR7-Ch-tQ6"/>
+                            <constraint firstItem="pd0-Hu-Gtj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="yen-sB-TCy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="businessNameTableView" destination="RNk-5V-iEG" id="NHe-JJ-zaw"/>
-                        <outlet property="searchBar" destination="AZM-q0-2Px" id="Lkp-LL-66r"/>
+                        <outlet property="businessCollectionView" destination="pd0-Hu-Gtj" id="0jP-Pf-Yuj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

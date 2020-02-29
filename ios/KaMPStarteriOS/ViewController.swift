@@ -8,21 +8,17 @@
 import UIKit
 import shared
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
     
-
-    @IBOutlet weak var businessNameTableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var businessCollectionView: UICollectionView!
     var businessInfo: Array<KotlinPair<Business, BusinessReview>> = []
     
     private var getBusinessesAndTopReviewsBySearch: GetBusinessesAndTopReviewsBySearch?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        businessNameTableView.delegate = self
-        businessNameTableView.dataSource = self
-        searchBar.delegate = self
-        
+
         getBusinessesAndTopReviewsBySearch = GetBusinessesAndTopReviewsBySearch()
     }
     
@@ -32,17 +28,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.getBusinessesAndTopReviewsBySearch = nil
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return businessInfo.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessNameCell", for: indexPath)
-        if let businessNameCell = cell as? BusinessNameCell {
-            let businessInfo = self.businessInfo[indexPath.row]
-            businessNameCell.bind(businessInfo: businessInfo)
-        }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: BusinessCell = collectionView.dequeueReusableCell(withReuseIdentifier: "BusinessCell", for: indexPath) as! BusinessCell
+        
+        let businessInfo = self.businessInfo[indexPath.row]
+        cell.bind(businessInfo: businessInfo)
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let searchView: UICollectionReusableView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "searchBar", for: indexPath)
+        
+        return searchView
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -51,23 +53,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                 }) { (success: Any) -> Any in
                     self.businessInfo = success as! NSArray as! Array<KotlinPair<Business, BusinessReview>>
-                    return self.businessNameTableView.reloadData()
+                    return self.businessCollectionView.reloadData()
                 }
             })
         }
-    }
-}
-
-class BusinessNameCell: UITableViewCell {
-    
-    @IBOutlet weak var businessNameLabel: UILabel!
-    
-    var business: Business?
-    var businessReview: BusinessReview?
-    
-    func bind(businessInfo: KotlinPair<Business, BusinessReview>){
-        self.business = businessInfo.first
-        self.businessReview = businessInfo.second
-        businessNameLabel.text = business?.name
     }
 }

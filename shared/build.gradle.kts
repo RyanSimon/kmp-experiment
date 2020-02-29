@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
@@ -21,7 +22,14 @@ android {
 
 kotlin {
     android()
-    ios()
+    //Revert to just ios() when gradle plugin can properly resolve it
+    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos")?:false
+    if(onPhone){
+        iosArm64("ios")
+    }else{
+        iosX64("ios")
+    }
+    targets.getByName<KotlinNativeTarget>("ios").compilations["main"].kotlinOptions.freeCompilerArgs += "-Xobjc-generics"
 
     version = "1.0"
 
@@ -102,7 +110,7 @@ val iOSTest: Task by tasks.creating {
     description = "Runs tests for target 'ios' on an iOS simulator"
 
     doLast {
-        val binary = kotlin.targets.getByName<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget>("iosX64").binaries.getTest("DEBUG").outputFile
+        val binary = kotlin.targets.getByName<KotlinNativeTarget>("ios").binaries.getTest("DEBUG").outputFile
         exec {
             commandLine("xcrun", "simctl", "spawn", "--standalone",device, binary.absolutePath)
         }

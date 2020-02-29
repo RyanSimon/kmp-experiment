@@ -2,17 +2,17 @@
 //  ViewController.swift
 //  KaMPStarteriOS
 //
-//  Created by Kevin Schildhorn on 12/18/19.
-//  Copyright © 2019 Touchlab. All rights reserved.
+//  Copyright © 2020 Ryan Simon. All rights reserved.
 //
 
 import UIKit
 import shared
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
 
     @IBOutlet weak var businessNameTableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     var businessInfo: Array<KotlinPair<Business, BusinessReview>> = []
     
     private var getBusinessesAndTopReviewsBySearch: GetBusinessesAndTopReviewsBySearch?
@@ -21,16 +21,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         businessNameTableView.delegate = self
         businessNameTableView.dataSource = self
+        searchBar.delegate = self
         
         getBusinessesAndTopReviewsBySearch = GetBusinessesAndTopReviewsBySearch()
-        
-        getBusinessesAndTopReviewsBySearch!.invoke(params: GetBusinessesAndTopReviewsBySearch.Params(searchTerm: "chocolate", location: "San Francisco, CA", numResults: 20, numResultsToSkip: 0), onResult: { (either: Either) in either.either(fnL: { _ in
-                
-            }) { (success: Any) -> Any in
-                self.businessInfo = success as! NSArray as! Array<KotlinPair<Business, BusinessReview>>
-                return self.businessNameTableView.reloadData()
-            }
-        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -50,6 +43,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             businessNameCell.bind(businessInfo: businessInfo)
         }
         return cell
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text {
+            getBusinessesAndTopReviewsBySearch?.invoke(params: GetBusinessesAndTopReviewsBySearch.Params(searchTerm: searchText, location: "San Francisco, CA", numResults: 20, numResultsToSkip: 0), onResult: { (either: Either) in either.either(fnL: { _ in
+                    
+                }) { (success: Any) -> Any in
+                    self.businessInfo = success as! NSArray as! Array<KotlinPair<Business, BusinessReview>>
+                    return self.businessNameTableView.reloadData()
+                }
+            })
+        }
     }
 }
 

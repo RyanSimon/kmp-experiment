@@ -12,6 +12,7 @@ import shared
 class BusinessCell: UICollectionViewCell {
 
     @IBOutlet weak var businessNameLabel: UILabel!
+    @IBOutlet weak var businessImageView: UIImageView!
     
     var business: Business?
     var businessReview: BusinessReview?
@@ -26,5 +27,8 @@ class BusinessCell: UICollectionViewCell {
         self.business = businessInfo.first
         self.businessReview = businessInfo.second
         businessNameLabel.text = business?.name
+        if let url = URL(string: business?.imageUrl ?? "") {
+            businessImageView.setImage(from: url)
+        }
     }
 }

@@ -20,7 +20,16 @@ class BusinessCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        self.backgroundColor = UIColor.red
+        // add shadow on cell
+        layer.masksToBounds = false
+        layer.shadowOpacity = 0.23
+        layer.shadowRadius = 2
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowColor = UIColor.black.cgColor
+
+        // add corner radius on `contentView`
+        contentView.layer.cornerRadius = 4
+        contentView.layer.masksToBounds = true
     }
     
     func bind(businessInfo: KotlinPair<Business, BusinessReview>){

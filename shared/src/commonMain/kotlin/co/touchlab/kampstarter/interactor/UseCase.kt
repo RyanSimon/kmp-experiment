@@ -3,11 +3,9 @@ package co.touchlab.kampstarter.interactor
 
 import co.touchlab.kampstarter.Failure
 import co.touchlab.kampstarter.functional.Either
+import co.touchlab.kampstarter.interactor.UseCase.MainScope
 import co.touchlab.kampstarter.printThrowable
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -61,7 +59,7 @@ abstract class UseCase<out Type, in Params> where Type : Any {
         override val coroutineContext: CoroutineContext
             get() = mainContext + job + exceptionHandler
 
-        internal val job = Job()
+        internal val job = SupervisorJob()
         private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
             showError(throwable)
         }

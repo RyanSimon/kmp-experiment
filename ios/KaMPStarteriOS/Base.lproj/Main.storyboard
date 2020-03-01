@@ -20,25 +20,25 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="832"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="aa7-9H-iWT">
-                                    <size key="itemSize" width="206" height="244"/>
+                                    <size key="itemSize" width="206" height="250"/>
                                     <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BusinessCell" id="4Jg-HY-huk" customClass="BusinessCell" customModule="KaMPStarteriOS" customModuleProvider="target">
-                                        <rect key="frame" x="104" y="60" width="206" height="244"/>
+                                        <rect key="frame" x="104" y="60" width="206" height="250"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zcI-NH-8uW" customClass="BusinessCell" customModule="KaMPStarteriOS" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="206" height="244"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="206" height="250"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4FW-lv-79o">
-                                                    <rect key="frame" x="0.0" y="0.0" width="206" height="188"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4FW-lv-79o">
+                                                    <rect key="frame" x="0.0" y="0.0" width="206" height="185"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUX-1q-7Ig">
-                                                    <rect key="frame" x="8" y="196" width="188" height="37"/>
+                                                    <rect key="frame" x="8" y="185" width="188" height="65"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -46,7 +46,7 @@
                                                 </label>
                                             </subviews>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="206" height="244"/>
+                                        <size key="customSize" width="206" height="250"/>
                                         <connections>
                                             <outlet property="businessImageView" destination="4FW-lv-79o" id="eEK-l0-Fzb"/>
                                             <outlet property="businessNameLabel" destination="cUX-1q-7Ig" id="vIN-Wf-It8"/>

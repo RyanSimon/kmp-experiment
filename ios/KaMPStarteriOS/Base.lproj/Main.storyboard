@@ -33,16 +33,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUX-1q-7Ig">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUX-1q-7Ig">
                                                     <rect key="frame" x="10" y="16" width="404" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="cUX-1q-7Ig" firstAttribute="leading" secondItem="zcI-NH-8uW" secondAttribute="leading" constant="10" id="zt3-iS-q1I"/>
-                                            </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="414" height="56"/>
                                         <connections>
@@ -69,7 +67,7 @@
                                 </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="U4H-lI-5S9"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="XV7-y7-k9L"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="XKW-e9-2Qg"/>
                                 </connections>
                             </collectionView>
                         </subviews>
@@ -83,7 +81,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="businessCollectionView" destination="pd0-Hu-Gtj" id="0jP-Pf-Yuj"/>
+                        <outlet property="businessCollectionView" destination="pd0-Hu-Gtj" id="9ZK-P9-h8B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

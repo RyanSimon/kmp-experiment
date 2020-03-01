@@ -16,6 +16,12 @@ class BusinessCell: UICollectionViewCell {
     var business: Business?
     var businessReview: BusinessReview?
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        self.backgroundColor = UIColor.red
+    }
+    
     func bind(businessInfo: KotlinPair<Business, BusinessReview>){
         self.business = businessInfo.first
         self.businessReview = businessInfo.second
